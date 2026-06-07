@@ -19,8 +19,6 @@ Dự án nghiên cứu thiết kế, chế tạo mô hình thực nghiệm hệ 
 ├── hardware_test/             # Mã nguồn kiểm tra kết nối phần cứng ngoại vi
 │   ├── hardware_test.ino      # Kiểm tra độc lập LCD, đóng ngắt Relay và LED RGB
 │   └── README.md
-├── i2c_scanner/               # Mã nguồn quét thiết bị trên bus I2C
-│   └── i2c_scanner.ino        # Tìm địa chỉ hex của màn hình LCD (mặc định 0x27)
 ├── mic_test/                  # Mã nguồn kiểm tra tín hiệu microphone
 │   └── mic_test.ino           # Đọc tín hiệu I2S thô vẽ lên Serial Plotter
 └── tools/                     # Các công cụ Python hỗ trợ tiền xử lý dữ liệu trên PC
