@@ -1,0 +1,23 @@
+# Arduino IDE build files
+build/
+libraries/
+*.hex
+*.bin
+*.elf
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Microsoft Word temporary files (Owner files)
+~$*.docx
+*.docx.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
