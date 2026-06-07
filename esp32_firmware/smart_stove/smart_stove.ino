@@ -131,7 +131,8 @@ void loop() {
     // Ngưỡng nhận diện động: 0.65 cho từ khóa đánh thức "nguyen_khoi" để nhạy hơn,
     // các lệnh điều khiển khác giữ nguyên 0.75 để tránh nhận nhầm nguy hiểm.
     float threshold = 0.75;
-    if (strcmp(detected_label, "nguyen_khoi") == 0) {
+    // BUG FIX: Kiểm tra cả nhãn có dấu gạch dưới lẫn dấu cách (tùy phiên bản Edge Impulse)
+    if (strcmp(detected_label, "nguyen_khoi") == 0 || strcmp(detected_label, "nguyen khoi") == 0) {
       threshold = 0.65;
     }
 
@@ -164,6 +165,12 @@ void loop() {
         // Lệnh: Đánh thức "nguyên khôi"
         if (strcmp(detected_label, "nguyen_khoi") == 0 || strcmp(detected_label, "nguyen khoi") == 0) {
           changeState(STATE_STANDBY);
+          // BUG FIX: changeState(STATE_STANDBY) có delay(1500ms) bên trong.
+          // Sau khi hàm trả về, ~1500ms đã trôi qua khiến debounce (1500ms) vừa hết hạn,
+          // dẫn đến "nguyen khoi" bị nhận diện lại NGAY LẬP TỨC lần 2.
+          // Lần gọi thứ 2 có prevState=STANDBY → nhánh else → digitalWrite(RELAY, LOW) → BẾP TẮT!
+          // => Reset lastCommandTime NGAY SAU khi changeState trả về để bắt đầu lại debounce.
+          lastCommandTime = millis();
         }
         // Lệnh: "bếp lửa" (bật nấu) - Chỉ nhận khi đang chờ STANDBY
         else if (strcmp(detected_label, "bep_lua") == 0 || strcmp(detected_label, "bep lua") == 0) {
